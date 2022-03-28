@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MySQL规范大全 | 九世</title><meta name="keywords" content="MySQL,面试"><meta name="author" content="九世"><meta name="copyright" content="九世"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="模糊查询页面搜索严禁左模糊或者全模糊,如果需要请走搜索引擎来解决;  Ps:索引文件具有B-Tree的最左前缀匹配特性,左边值都不能确定的情况,将无法使用索引;  MySQL中存储引擎没有特殊要求(即Innodb无法满足列存储,存储空间数据等),所有的表必须使用Innodb存储引擎(MySQL5.5之前默认使用Myisam,5.6以后默认为Innodb);  Ps:Innodb支持事务,支持行级锁">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL规范大全">
+<meta property="og:url" content="http://jiushiboy.github.io/post/34805.html">
+<meta property="og:site_name" content="九世">
+<meta property="og:description" content="模糊查询页面搜索严禁左模糊或者全模糊,如果需要请走搜索引擎来解决;  Ps:索引文件具有B-Tree的最左前缀匹配特性,左边值都不能确定的情况,将无法使用索引;  MySQL中存储引擎没有特殊要求(即Innodb无法满足列存储,存储空间数据等),所有的表必须使用Innodb存储引擎(MySQL5.5之前默认使用Myisam,5.6以后默认为Innodb);  Ps:Innodb支持事务,支持行级锁">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg">
+<meta property="article:published_time" content="2022-03-28T05:54:03.932Z">
+<meta property="article:modified_time" content="2022-03-28T05:54:03.932Z">
+<meta property="article:author" content="九世">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/favicon.ico"><link rel="canonical" href="http://jiushiboy.github.io/post/34805"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":20,"position":"top","messagePrev":"这篇文章","messageNext":"自上次更新以来的天数,文章的内容可能已过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 九世","link":"链接: ","source":"来源: 九世","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-28 13:54:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/jiushi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/tx%20(2).jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 九世的仓库</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 图片</span></a></li><li><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment"></i><span> 说说</span></a></li><li><a class="site-page" href="/offection/"><i class="fa-fw fas fa-paper-plane"></i><span> 故事</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">九世</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 九世的仓库</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 图片</span></a></li><li><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment"></i><span> 说说</span></a></li><li><a class="site-page" href="/offection/"><i class="fa-fw fas fa-paper-plane"></i><span> 故事</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL规范大全</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-28T05:54:03.932Z" title="更新于 2022-03-28 13:54:03">2022-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MySQL/">MySQL</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><p>页面搜索严禁左模糊或者全模糊,如果需要请走搜索引擎来解决;</p>
+<blockquote>
+<p>Ps:索引文件具有B-Tree的最左前缀匹配特性,左边值都不能确定的情况,将无法使用索引;</p>
+</blockquote>
+<h3 id="MySQL中存储引擎"><a href="#MySQL中存储引擎" class="headerlink" title="MySQL中存储引擎"></a>MySQL中存储引擎</h3><p>没有特殊要求(即Innodb无法满足列存储,存储空间数据等),所有的表必须使用Innodb存储引擎(MySQL5.5之前默认使用Myisam,5.6以后默认为Innodb);</p>
+<blockquote>
+<p>Ps:Innodb支持事务,支持行级锁,更好的恢复性,高并发下性能更好;</p>
+</blockquote>
+<h3 id="数据库和表的字符集"><a href="#数据库和表的字符集" class="headerlink" title="数据库和表的字符集"></a>数据库和表的字符集</h3><p>[强制] 统一使用utf8mb4</p>
+<h3 id="MySQL注释"><a href="#MySQL注释" class="headerlink" title="MySQL注释"></a>MySQL注释</h3><p>[强制] 所有的表和字段必须添加注释,使用comment添加表和列的备注,保证数据字典的可维护性;</p>
+<h3 id="预留字段"><a href="#预留字段" class="headerlink" title="预留字段"></a>预留字段</h3><p>禁止在表中建预留字段;</p>
+<blockquote>
+<p>Ps:预留字段命名不能做到见名知意;预留字段无法确定存储的数据类型,所以无法选择合适的类型;对预留字段的修改,会对表进行锁定;</p>
+</blockquote>
+<h3 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h3><p>禁止在数据库存储图片、文件等大的二进制数据;</p>
+<blockquote>
+<p>Ps:通常文件很大,会短时间内造成数据量快速增长,数据库进行读取时,通常会进行大量的随机IO操作,文件很大时,IO特别耗时;</p>
+</blockquote>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>优先选择符合存储需要的最小数据类型;</p>
+<blockquote>
+<p>Ps:列的字段越大,建立索引所需要的空间也就越大,这样一页中所能存储的索引节点的数量也就越少,在遍历时所需要的IO次数也就越多,索引的性能也就越差;</p>
+</blockquote>
+<h3 id="避免使用text、blob数据类型-最常见的text类型k可以存储64k的数据"><a href="#避免使用text、blob数据类型-最常见的text类型k可以存储64k的数据" class="headerlink" title="避免使用text、blob数据类型,最常见的text类型k可以存储64k的数据;"></a>避免使用text、blob数据类型,最常见的text类型k可以存储64k的数据;</h3><h3 id="避免使用enum类型"><a href="#避免使用enum类型" class="headerlink" title="避免使用enum类型"></a>避免使用enum类型</h3><blockquote>
+<p>Ps:修改enum值需要使用alter语句,enum类型的order by 操作效率低,需要额外操作,禁止数值作为enum的枚举值;</p>
+</blockquote>
+<h3 id="尽可能所有列定义为Not-Null"><a href="#尽可能所有列定义为Not-Null" class="headerlink" title="尽可能所有列定义为Not Null"></a>尽可能所有列定义为Not Null</h3><blockquote>
+<p>Ps:索引Null列需要额外的空间来保存,所以要占用更多的空间,进行比较和计算时要对null值做特别的处理;</p>
+</blockquote>
+<h3 id="使用timestamp-4个字节-或datetime类型-8个字节-存储时间"><a href="#使用timestamp-4个字节-或datetime类型-8个字节-存储时间" class="headerlink" title="使用timestamp(4个字节)或datetime类型(8个字节)存储时间"></a>使用timestamp(4个字节)或datetime类型(8个字节)存储时间</h3><ul>
+<li>timestamp存储的时间范围1970-01-01 00:00:00 ~ 2038-01-19 03:14:07</li>
+<li>timestamp占用4字节和int相同,但比int可读性高</li>
+<li>超出timestamp取值范围使用datetime类型存储</li>
+<li><blockquote>
+<p>使用字符串存储日期数据是不正确的; 无法用日期函数进行计算和比较; 用字符串存储日期要占用更多的空间;</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="同财务相关的金额类型必须使用decimal类型"><a href="#同财务相关的金额类型必须使用decimal类型" class="headerlink" title="同财务相关的金额类型必须使用decimal类型"></a>同财务相关的金额类型必须使用decimal类型</h3><ul>
+<li>非精准浮点:float,duble</li>
+<li>精准浮点: decimal</li>
+<li>Decimal类型为精准浮点数,在计算时不会丢失精度;</li>
+<li>占用空间由定义的宽度决定,每四个字节可以存储9位数字,并且小数点要占用一个字节;</li>
+<li>可用于存储比bigint更大的整型数据;</li>
+</ul>
+<h3 id="限制每张表上的索引数量-建议单表索引不超过五个"><a href="#限制每张表上的索引数量-建议单表索引不超过五个" class="headerlink" title="限制每张表上的索引数量,建议单表索引不超过五个"></a>限制每张表上的索引数量,建议单表索引不超过五个</h3><blockquote>
+<p>PS: 索引并不是越多月好,索引可以提高效率但是过多反而降低了效率; 索引可以增加查询效率,但同样会降低插入和更新的效率,甚至有些情况会降低查询效率; 因为MySQL优化器在选择如何优化查询时,会根据统一信息,对每一个而已用到的索引来进行评估,以生出一个最好的执行计划,如果同时有很多个索引都可以用于查询,就会增加MySQL优化器生成执行计划的时间,同样会降低查询性能;</p>
+</blockquote>
+<h3 id="禁止给表中每一列都建立单独的索引"><a href="#禁止给表中每一列都建立单独的索引" class="headerlink" title="禁止给表中每一列都建立单独的索引"></a>禁止给表中每一列都建立单独的索引</h3><h3 id="每个Innodb表必须有个主键"><a href="#每个Innodb表必须有个主键" class="headerlink" title="每个Innodb表必须有个主键"></a>每个Innodb表必须有个主键</h3><blockquote>
+<ul>
+<li>Innodb是一种索引组织表;数据存储的逻辑顺序和索引的顺序是相同的;每个表都可以有多个索引,但是表的存储顺序只能有一种;</li>
+<li>Innodb是按照主键索引的顺序来组织表的;</li>
+<li>不要使用更新频繁的列作为主键,不适用多列主键(相当于联合索引);</li>
+<li>不要使用UUID,MD5,HASH,字符串列作为主键(无法保证数据的顺序增长);</li>
+<li>主键建议使用自增ID值;</li>
+</ul>
+</blockquote>
+<h3 id="如何选择索引列的顺序"><a href="#如何选择索引列的顺序" class="headerlink" title="如何选择索引列的顺序"></a>如何选择索引列的顺序</h3><blockquote>
+<p>建立索引的目的是:希望通过索引进行数据查找,减少随机IO,增加查询性能,索引能过滤出越少的数据,则从磁盘中读入的数据也就越少;</p>
+<ul>
+<li>区分度最高的放在联合索引的最左侧(区分度=列中不同值的熟练/列的总行数)</li>
+<li>尽量把字段长度小的列放在联合索引的最左侧(因为字段长度越小,一页能存储的数据量越大,IO性能就越好)</li>
+<li>使用最频繁的列放在联合索引的左侧(这样可以比较少的建立一些索引)</li>
+</ul>
+</blockquote>
+<h3 id="避免建立冗余索引和重复索引-增加了查询优化器生成执行计划的时间"><a href="#避免建立冗余索引和重复索引-增加了查询优化器生成执行计划的时间" class="headerlink" title="避免建立冗余索引和重复索引(增加了查询优化器生成执行计划的时间)"></a>避免建立冗余索引和重复索引(增加了查询优化器生成执行计划的时间)</h3><ul>
+<li>重复索引示例: primary key(id)、index(id)、unique index(id)</li>
+<li>冗余索引示例: index(a,b,c)、index(a,b)、index(a)</li>
+</ul>
+<h3 id="索引Set规范"><a href="#索引Set规范" class="headerlink" title="索引Set规范"></a>索引Set规范</h3><blockquote>
+<p>尽量避免使用外键约束</p>
+<ul>
+<li>不建议使用外键约束(foreign key),但一定要在表与表的关联键上建立索引;</li>
+<li>外键可用于保证数据的参照完整性,但建议在业务端实现;</li>
+<li>外键会影响父表和子表的写操作从而降低性能;</li>
+</ul>
+</blockquote>
+<h3 id="Select规则"><a href="#Select规则" class="headerlink" title="Select规则"></a>Select规则</h3><blockquote>
+<p>禁止使用SELECT * 必须使用SELECT&lt;字段列表&gt;查询<br>Ps:这波不过多介绍,自行百度</p>
+</blockquote>
+<h3 id="禁止使用不含字段的INSERT语句"><a href="#禁止使用不含字段的INSERT语句" class="headerlink" title="禁止使用不含字段的INSERT语句"></a>禁止使用不含字段的INSERT语句</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;错误示例</span><br><span class="line">insert into values(&#39;jiu&#39;,&#39;shi&#39;,&#39;boy&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;正确示例</span><br><span class="line">insert into table(c1,c2,c3) values(&#39;jiu&#39;,&#39;shi&#39;,&#39;boy&#39;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="避免使用子查询-可以把子查询优化为join操作"><a href="#避免使用子查询-可以把子查询优化为join操作" class="headerlink" title="避免使用子查询,可以把子查询优化为join操作"></a>避免使用子查询,可以把子查询优化为join操作</h3><blockquote>
+<p>通常子查询在in子句中,且子查询中为简单SQL(不包含union、group by、order by 、limit从句)时,才可以把子查询转化为关联查询进行优化;</p>
+<p>子查询性能差的原因:</p>
+<ul>
+<li>子查询的结果集无法使用索引,通常子查询的结果集会被存储到临时表中,不论是内存临时表还是磁盘临时表都不会存在索引,所以查询性能收到一定影响;特别是返回结果集比较大的子查询,对查询性能影响就越大;</li>
+<li>由于子查询会产生大量的临时表也没有索引,所以会消耗过多的cpu和io资源,产生大量的慢查询;</li>
+</ul>
+</blockquote>
+<h3 id="避免使用join关联太多的表"><a href="#避免使用join关联太多的表" class="headerlink" title="避免使用join关联太多的表"></a>避免使用join关联太多的表</h3><blockquote>
+<p>同时对于关联操作来说,会产生临时表的操作,影响查询效率,MySQL最多允许关联61表,建议不超过5个;</p>
+</blockquote>
+<h3 id="减少同数据库的交互次数"><a href="#减少同数据库的交互次数" class="headerlink" title="减少同数据库的交互次数"></a>减少同数据库的交互次数</h3><blockquote>
+<p>数据库更适合处理批量操作,合并多个相同的操作到一起,可以提高效率;</p>
+</blockquote>
+<h3 id="对应同一列进行or判断时-使用in-代替or"><a href="#对应同一列进行or判断时-使用in-代替or" class="headerlink" title="对应同一列进行or判断时,使用in 代替or"></a>对应同一列进行or判断时,使用in 代替or</h3><blockquote>
+<p>in的值不要超过500个,in操作可以更有效的利用索引,or大多数情况下很少能利用索引;</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">九世</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://jiushiboy.github.io/post/34805.html">http://jiushiboy.github.io/post/34805.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://jiushiboy.github.io" target="_blank">九世</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a><a class="post-meta__tags" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/alipay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/2ee0dda4.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySQL之PXC集群</div></div></a></div><div class="next-post pull-right"><a href="/post/cc8bebee.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL解压版安装教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/17988.html" title="MySQL优化(精华)"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-14</div><div class="title">MySQL优化(精华)</div></div></a></div><div><a href="/post/b3bbf81f.html" title="MySQL分布式锁"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-28</div><div class="title">MySQL分布式锁</div></div></a></div><div><a href="/post/2ee0dda4.html" title="MySQL之PXC集群"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-28</div><div class="title">MySQL之PXC集群</div></div></a></div><div><a href="/post/cc8bebee.html" title="MySQL解压版安装教程"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-28</div><div class="title">MySQL解压版安装教程</div></div></a></div><div><a href="/post/44248.html" title="Mybatis常见面试题总结"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-04</div><div class="title">Mybatis常见面试题总结</div></div></a></div><div><a href="/post/20562.html" title="Spring常见面试题"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-24</div><div class="title">Spring常见面试题</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/tx%20(2).jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">九世</div><div class="author-info__description">道听途说故等风数十载</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/jiushiboy" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1450495810@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">九世的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.</span> <span class="toc-text">模糊查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E4%B8%AD%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-number">2.</span> <span class="toc-text">MySQL中存储引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">3.</span> <span class="toc-text">数据库和表的字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E6%B3%A8%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">MySQL注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E7%95%99%E5%AD%97%E6%AE%B5"><span class="toc-number">5.</span> <span class="toc-text">预留字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">存储数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8text%E3%80%81blob%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84text%E7%B1%BB%E5%9E%8Bk%E5%8F%AF%E4%BB%A5%E5%AD%98%E5%82%A864k%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">8.</span> <span class="toc-text">避免使用text、blob数据类型,最常见的text类型k可以存储64k的数据;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8enum%E7%B1%BB%E5%9E%8B"><span class="toc-number">9.</span> <span class="toc-text">避免使用enum类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E6%89%80%E6%9C%89%E5%88%97%E5%AE%9A%E4%B9%89%E4%B8%BANot-Null"><span class="toc-number">10.</span> <span class="toc-text">尽可能所有列定义为Not Null</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8timestamp-4%E4%B8%AA%E5%AD%97%E8%8A%82-%E6%88%96datetime%E7%B1%BB%E5%9E%8B-8%E4%B8%AA%E5%AD%97%E8%8A%82-%E5%AD%98%E5%82%A8%E6%97%B6%E9%97%B4"><span class="toc-number">11.</span> <span class="toc-text">使用timestamp(4个字节)或datetime类型(8个字节)存储时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E8%B4%A2%E5%8A%A1%E7%9B%B8%E5%85%B3%E7%9A%84%E9%87%91%E9%A2%9D%E7%B1%BB%E5%9E%8B%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8decimal%E7%B1%BB%E5%9E%8B"><span class="toc-number">12.</span> <span class="toc-text">同财务相关的金额类型必须使用decimal类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E6%AF%8F%E5%BC%A0%E8%A1%A8%E4%B8%8A%E7%9A%84%E7%B4%A2%E5%BC%95%E6%95%B0%E9%87%8F-%E5%BB%BA%E8%AE%AE%E5%8D%95%E8%A1%A8%E7%B4%A2%E5%BC%95%E4%B8%8D%E8%B6%85%E8%BF%87%E4%BA%94%E4%B8%AA"><span class="toc-number">13.</span> <span class="toc-text">限制每张表上的索引数量,建议单表索引不超过五个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E7%BB%99%E8%A1%A8%E4%B8%AD%E6%AF%8F%E4%B8%80%E5%88%97%E9%83%BD%E5%BB%BA%E7%AB%8B%E5%8D%95%E7%8B%AC%E7%9A%84%E7%B4%A2%E5%BC%95"><span class="toc-number">14.</span> <span class="toc-text">禁止给表中每一列都建立单独的索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AAInnodb%E8%A1%A8%E5%BF%85%E9%A1%BB%E6%9C%89%E4%B8%AA%E4%B8%BB%E9%94%AE"><span class="toc-number">15.</span> <span class="toc-text">每个Innodb表必须有个主键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E7%B4%A2%E5%BC%95%E5%88%97%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">16.</span> <span class="toc-text">如何选择索引列的顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E5%BB%BA%E7%AB%8B%E5%86%97%E4%BD%99%E7%B4%A2%E5%BC%95%E5%92%8C%E9%87%8D%E5%A4%8D%E7%B4%A2%E5%BC%95-%E5%A2%9E%E5%8A%A0%E4%BA%86%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8%E7%94%9F%E6%88%90%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E7%9A%84%E6%97%B6%E9%97%B4"><span class="toc-number">17.</span> <span class="toc-text">避免建立冗余索引和重复索引(增加了查询优化器生成执行计划的时间)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95Set%E8%A7%84%E8%8C%83"><span class="toc-number">18.</span> <span class="toc-text">索引Set规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Select%E8%A7%84%E5%88%99"><span class="toc-number">19.</span> <span class="toc-text">Select规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%AB%E5%AD%97%E6%AE%B5%E7%9A%84INSERT%E8%AF%AD%E5%8F%A5"><span class="toc-number">20.</span> <span class="toc-text">禁止使用不含字段的INSERT语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2-%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%AD%90%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E4%B8%BAjoin%E6%93%8D%E4%BD%9C"><span class="toc-number">21.</span> <span class="toc-text">避免使用子查询,可以把子查询优化为join操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8join%E5%85%B3%E8%81%94%E5%A4%AA%E5%A4%9A%E7%9A%84%E8%A1%A8"><span class="toc-number">22.</span> <span class="toc-text">避免使用join关联太多的表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E5%90%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%A4%E4%BA%92%E6%AC%A1%E6%95%B0"><span class="toc-number">23.</span> <span class="toc-text">减少同数据库的交互次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%BA%94%E5%90%8C%E4%B8%80%E5%88%97%E8%BF%9B%E8%A1%8Cor%E5%88%A4%E6%96%AD%E6%97%B6-%E4%BD%BF%E7%94%A8in-%E4%BB%A3%E6%9B%BFor"><span class="toc-number">24.</span> <span class="toc-text">对应同一列进行or判断时,使用in 代替or</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/bcab918b.html" title="JDK8新特性"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK8新特性"/></a><div class="content"><a class="title" href="/post/bcab918b.html" title="JDK8新特性">JDK8新特性</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/7579c9d4.html" title="关于登录问题"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于登录问题"/></a><div class="content"><a class="title" href="/post/7579c9d4.html" title="关于登录问题">关于登录问题</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/dd5269ff.html" title="阿里EasyExcel"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="阿里EasyExcel"/></a><div class="content"><a class="title" href="/post/dd5269ff.html" title="阿里EasyExcel">阿里EasyExcel</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/d0edc1ed.html" title="Linux常用命令"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux常用命令"/></a><div class="content"><a class="title" href="/post/d0edc1ed.html" title="Linux常用命令">Linux常用命令</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2ee0dda4.html" title="MySQL之PXC集群"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL之PXC集群"/></a><div class="content"><a class="title" href="/post/2ee0dda4.html" title="MySQL之PXC集群">MySQL之PXC集群</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 九世</div><div class="footer_custom_text">Hi, welcome to jiushiboy <a target="_blank" rel="noopener" href="https://jiushiboy.top/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '8YFlOqnbmYOyqAkjg8GgyLC0-gzGzoHsz',
+      appKey: 'YMPaB34JxpV8V7q1ltOCEX9U',
+      placeholder: '昵称输入qq账号的话会自动获取你的头像和邮箱噢~~',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: 'https://8yfloqnb.lc-cn-n1-shared.com',
+      emojiCDN: '//i0.hdslb.com/bfs/emote/',
+      emojiMaps: {"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://8yfloqnb.lc-cn-n1-shared.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": '8YFlOqnbmYOyqAkjg8GgyLC0-gzGzoHsz',
+        "X-LC-Key": 'YMPaB34JxpV8V7q1ltOCEX9U',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script  src="/js/jiushi.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

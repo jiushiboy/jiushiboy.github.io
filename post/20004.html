@@ -1,0 +1,657 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpringCloudAlibaba | 九世</title><meta name="keywords" content="SpringCloudAlibaba,SpringCloud"><meta name="author" content="九世"><meta name="copyright" content="九世"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nacos 服务注册 Nacos服务端 下载地址:https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;nacos&#x2F;releases Windows启动Nacos执行bin目录下面的startup.cmd 启动之后你会发现莫名其妙的报了一大堆错误,我Nacos1.4.0版本的,默认启动是启动的集群模式的Nacos;这时我们需要打开cmd命令复制代码执行(standalone代表着单机模式运行，非集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloudAlibaba">
+<meta property="og:url" content="http://jiushiboy.github.io/post/20004.html">
+<meta property="og:site_name" content="九世">
+<meta property="og:description" content="Nacos 服务注册 Nacos服务端 下载地址:https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;nacos&#x2F;releases Windows启动Nacos执行bin目录下面的startup.cmd 启动之后你会发现莫名其妙的报了一大堆错误,我Nacos1.4.0版本的,默认启动是启动的集群模式的Nacos;这时我们需要打开cmd命令复制代码执行(standalone代表着单机模式运行，非集">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/u=3360971790,3534736865&fm=26&gp=0.jpg">
+<meta property="article:published_time" content="2021-03-03T06:15:49.000Z">
+<meta property="article:modified_time" content="2022-03-28T05:54:03.932Z">
+<meta property="article:author" content="九世">
+<meta property="article:tag" content="SpringCloudAlibaba">
+<meta property="article:tag" content="SpringCloud">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/u=3360971790,3534736865&fm=26&gp=0.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/favicon.ico"><link rel="canonical" href="http://jiushiboy.github.io/post/20004"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":20,"position":"top","messagePrev":"这篇文章","messageNext":"自上次更新以来的天数,文章的内容可能已过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 九世","link":"链接: ","source":"来源: 九世","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-28 13:54:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/jiushi.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/tx%20(2).jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 九世的仓库</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 图片</span></a></li><li><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment"></i><span> 说说</span></a></li><li><a class="site-page" href="/offection/"><i class="fa-fw fas fa-paper-plane"></i><span> 故事</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/u=3360971790,3534736865&amp;fm=26&amp;gp=0.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">九世</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 九世的仓库</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 图片</span></a></li><li><a class="site-page" href="/artitalk/"><i class="fa-fw fas fa-comment"></i><span> 说说</span></a></li><li><a class="site-page" href="/offection/"><i class="fa-fw fas fa-paper-plane"></i><span> 故事</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SpringCloudAlibaba</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-03T06:15:49.000Z" title="发表于 2021-03-03 14:15:49">2021-03-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-28T05:54:03.932Z" title="更新于 2022-03-28 13:54:03">2022-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringCloudAlibaba/">SpringCloudAlibaba</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Nacos-服务注册"><a href="#Nacos-服务注册" class="headerlink" title="Nacos 服务注册"></a>Nacos 服务注册</h2><blockquote>
+<h3 id="Nacos服务端"><a href="#Nacos服务端" class="headerlink" title="Nacos服务端"></a>Nacos服务端</h3><ul>
+<li>下载地址:<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases">https://github.com/alibaba/nacos/releases</a></li>
+<li>Windows启动Nacos执行bin目录下面的startup.cmd<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/1614771133(1).png"></li>
+<li>启动之后你会发现莫名其妙的报了一大堆错误,我Nacos1.4.0版本的,默认启动是启动的集群模式的Nacos;这时我们需要打开cmd命令复制代码执行(standalone代表着单机模式运行，非集群模式):</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Ps: 启动集群模式只需要执行startup.cmd</span><br><span class="line">startup.cmd -m standalone</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>访问路径为:<a target="_blank" rel="noopener" href="http://localhost:8848/nacos">http://localhost:8848/nacos</a></li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="Nacos客户端"><a href="#Nacos客户端" class="headerlink" title="Nacos客户端"></a>Nacos客户端</h3><ul>
+<li>使用Nacos需要在父pom或者子pom引入spring cloud alibaba依赖,根据官网选择你需要的版本:<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/tags">https://github.com/alibaba/spring-cloud-alibaba/tags</a></li>
+<li>代码传送门: <a target="_blank" rel="noopener" href="https://github.com/jiushiboy/springcloud">https://github.com/jiushiboy/springcloud</a></li>
+<li>cloudalibaba-consumer-nacos-order83 –&gt; 消费者</li>
+<li>cloudalibaba-provider-payment9001 –&gt; 生产者1</li>
+<li>cloudalibaba-provider-payment9002 –&gt; 生产者2</li>
+<li>Ps: Nacos自动集成了Ribbon调用可以从依赖中找到Netflix;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304142629.png"></li>
+<li>Ps: Nacos即支持CP也支持AP,CP模式支持注册持久化实例,AP则是临时支持注册实例,那么如何切换模式呢?</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT &#39;$NACOS_SERVER:8848&#x2F;nacos&#x2F;v1&#x2F;ns&#x2F;operator&#x2F;switches?entry&#x3D;serverMode&amp;value&#x3D;CP&#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nacos配置中心Config"><a href="#Nacos配置中心Config" class="headerlink" title="Nacos配置中心Config"></a>Nacos配置中心Config</h2><blockquote>
+<h3 id="客户端代码传送门"><a href="#客户端代码传送门" class="headerlink" title="客户端代码传送门"></a>客户端代码传送门</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-config-nacos-client3377">https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-config-nacos-client3377</a></li>
+<li>Ps: Nacos动态刷新功能需要使用@RefreshScope注解,实现配置自动刷新;</li>
+<li>官网参照传送门:<a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html">https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html</a></li>
+<li>在Nacos的服务端添加配置<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304152516.png"><br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304153423.png"></li>
+<li>图二有个小坑,在新建配置时,后缀使用yml的时候,由于nacos并没有做支持,仅支持yaml,所以你删除原来的重新建一个后缀.yaml的就好了;</li>
+<li>如果你实在是看不懂请回到上面的官网传送门,好好翻阅文档,稍后再试;</li>
+<li>Ps: 服务会有application.yml与bootstrap.yml两个配置文件,后者会覆盖前者的配置,可以在application.yml中指定使用哪个环境的配置文件;</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: dev</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>Nacos配置失败（java.lang.IllegalStateException: failed to req API:/nacos/v1/ns/instance after all server）</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">删除Nacos安装目录中data中的数据,重启nacos</span><br></pre></td></tr></table></figure>
+<blockquote>
+<h3 id="配置Config分组"><a href="#配置Config分组" class="headerlink" title="配置Config分组"></a>配置Config分组</h3><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304164446.png"></p>
+<ul>
+<li>修改配置<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304164556.png"></li>
+<li>可以指定配置文件在哪一个分组,然后使用哪种环境的配置;<h3 id="Namespace命名空间"><a href="#Namespace命名空间" class="headerlink" title="Namespace命名空间"></a>Namespace命名空间</h3><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210304165519.png"></li>
+<li>简单来讲就是哪个Namespace命名空间下有哪些分组,分组下面又有哪些配置;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210308135744.png"></li>
+<li>上配置文件 指定namespace下面的哪个group再到哪个环境的文件<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210304171141.png"></li>
+</ul>
+</blockquote>
+<h2 id="Nacos集群与持久化配置"><a href="#Nacos集群与持久化配置" class="headerlink" title="Nacos集群与持久化配置"></a>Nacos集群与持久化配置</h2><p>//TODO</p>
+<h2 id="Sentinel熔断与限流"><a href="#Sentinel熔断与限流" class="headerlink" title="Sentinel熔断与限流"></a>Sentinel熔断与限流</h2><blockquote>
+<h3 id="Sentinel服务端安装"><a href="#Sentinel服务端安装" class="headerlink" title="Sentinel服务端安装"></a>Sentinel服务端安装</h3><ul>
+<li>下载地址: <a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel">https://github.com/alibaba/Sentinel</a></li>
+<li>我下载的是1.8.0版本,运行命令(默认端口号为8080):</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar sentinel-dashboard-1.8.0.jar</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>访问localhost:8080<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210309094510.png"></li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="Sentinel客户端"><a href="#Sentinel客户端" class="headerlink" title="Sentinel客户端"></a>Sentinel客户端</h3><ul>
+<li>下载地址: <a target="_blank" rel="noopener" href="https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-sentinel-service8401">https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-sentinel-service8401</a></li>
+<li>Sentinel默认为懒加载,需要访问客户端调用一次服务才会加载;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210309101655.png"></li>
+</ul>
+</blockquote>
+<blockquote>
+<blockquote>
+<h3 id="Sentinel-1-8-0流控"><a href="#Sentinel-1-8-0流控" class="headerlink" title="Sentinel 1.8.0流控"></a>Sentinel 1.8.0流控</h3><p>第一种直接在簇点链路下面点击流控按钮添加流控规则,第二种是在流控规则里面添加;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210309103054.png"><br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210309102822.png"><br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210309103610.jpg"></p>
+<h4 id="解释说明"><a href="#解释说明" class="headerlink" title="解释说明"></a>解释说明</h4><p> 资源名: 唯一名称,默认请求路径;<br> 针对来源:Sentinel可以针对调用者进行限流,填写微服务名,默认default(不区分来源);<br> 阈值类型/单机阈值:</p>
+<ul>
+<li>QPS(每秒请求数量):当调用api的QPS达到阈值的时候,进行限流;</li>
+<li>线程数:当调用api的线程数达到阈值的时候,进行限流;<br>是否集群: 不需要集群;<br>流控模式</li>
+<li>直接:api达到限流条件,直接限流;</li>
+<li>关联:当关联的资源达到阈值时,限流自己;</li>
+<li>链路:只记录指定链路上的流量(指定资源从入口资源进来的流量,如果达到阈值,就进行限流)[api级别的针对来源]</li>
+</ul>
+<p>流控效果</p>
+<ul>
+<li>快速失败:直接失败异常;</li>
+<li>Warm Up:根据codeFactor(冷加载因子,默认3)的值,从阈值/codeFactor,经过预热时长,才达到设置的QPS阈值;</li>
+<li>排队等待:均速排队,让请求以均速的速度通过,阈值类型必须设置为QPS,否则无效;</li>
+</ul>
+</blockquote>
+</blockquote>
+<h2 id="Sentinel-1-8-0降级"><a href="#Sentinel-1-8-0降级" class="headerlink" title="Sentinel 1.8.0降级"></a>Sentinel 1.8.0降级</h2><blockquote>
+<blockquote>
+<p>因为我学的是Sentinel 1.7.0的,然后又在网上学的1.8.0版本,首先呢Sentinel在1.8.0对熔断降级做了很大的调整,现在已经支持自定义任意熔断时长了,引入了类似Hystirx的半开启恢复支持,如果想学习使用Hystrix请浏览: <a href="https://jiushiboy.github.io/posts/31969/">https://jiushiboy.github.io/posts/31969/</a>;<br>RT是什么? 下列答案是默认的情况下;<br>答:RT(平均响应时间,秒级),平均响应时间超出阈值且在时间窗口内通过的请求&gt;=5,同时满足这两个条件触发降级;<br>时间窗口也就是说在规定的时间内通过的请求大于等于5;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<h3 id="熔断状态"><a href="#熔断状态" class="headerlink" title="熔断状态"></a>熔断状态</h3><table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">OPEN</td>
+<td align="center">表示熔断开启,拒绝所有请求</td>
+</tr>
+<tr>
+<td align="center">HALF_OPEN</td>
+<td align="center">探测恢复状态,如果接下来的一个请求顺利通过则结束熔断,否则继续熔断</td>
+</tr>
+<tr>
+<td align="center">CLOSED</td>
+<td align="center">表示熔断关闭,请求顺利通过;</td>
+</tr>
+</tbody></table>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<h3 id="三种熔断策略"><a href="#三种熔断策略" class="headerlink" title="三种熔断策略"></a>三种熔断策略</h3><p>熔断降级的三种策略分别为: 慢调用比例、异常比列、异常数三种熔断策略;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<h4 id="慢调用比列"><a href="#慢调用比列" class="headerlink" title="慢调用比列"></a>慢调用比列</h4><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210311102322.png"><br>慢调用: 指耗时大于阈值RT的请求被称为慢调用(阈值RT由用户行设置);<br>最小请求数: 允许通过通过的最小请求数,表示你只要不超出数量就不熔断,用户自定义;</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">最大RT(平均响应时间)</td>
+<td align="center">需要设置的阈值,超过该值则为慢调用</td>
+</tr>
+<tr>
+<td align="center">比列阈值</td>
+<td align="center">慢调用占所有调用的比率,范围:[0~1]</td>
+</tr>
+<tr>
+<td align="center">熔断时长</td>
+<td align="center">在这段时间内发生熔断、拒绝所有请求</td>
+</tr>
+<tr>
+<td align="center">最小请求数</td>
+<td align="center">即允许通过的最小请求数,在该数量内不发生熔断</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>执行逻辑</p>
+<ul>
+<li>熔断(OPEN):请求数大于最小请求数且慢调用的比例大于比例阈值则发生熔断,熔断时间可以自定义设置;</li>
+<li>探测(HALFOPEN):当熔断过了定义的时长,状态由熔断OPEN变成探测HALFOPEN;<br>如果接下来的一个请求小于最大RT,说明慢调用已经恢复,则结束熔断,状态由探测HALFOPEN变为关闭CLOSED;<br>如果接下来的一个请求大于最大RT,说明慢调用未恢复,继续熔断,熔断时长保持一致;</li>
+<li>注意Sentinel默认统计RT(平均响应时间)上限是<code>4900ms</code>,超出阈值的都会算作4900ms,若需要变成此上限,可以通过启动配置项–Dcsp.sentinel.statistic.max.rt=xxx来配置</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<h4 id="异常比例"><a href="#异常比例" class="headerlink" title="异常比例"></a>异常比例</h4><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210311153246.png"><br>当资源的每秒请求数大于等于最小请求数,并且异常总数占通过量的比例超过比例阈值时,资源进入降级状态;</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">异常比例阈值</td>
+<td align="center">异常比例=发生异常的请求数÷请求总数,取值范围:[0~1]</td>
+</tr>
+<tr>
+<td align="center">熔断时长</td>
+<td align="center">在这段时间内发生熔断、拒绝所有请求</td>
+</tr>
+<tr>
+<td align="center">最小请求数</td>
+<td align="center">即允许通过的最小请求数,在该数量内不发生熔断</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>执行逻辑</p>
+<ul>
+<li>熔断OPEN:当请求数大于最小请求数并且异常比例大于设置阈值时触发熔断,熔断时长自定义设置;</li>
+<li>探测HALFOPEN:当超过熔断时长时,由熔断OPEN状态变为HALFOPEN;<br>如果接下来的一个请求未发生错误,说明应用恢复,结束熔断,状态由探测HALFOPEN转为关闭CLOSED;<br>如果接下来的一个请求继续发生错误,说明应用未恢复,继续熔断,熔断时长保持一致;</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<h4 id="异常数"><a href="#异常数" class="headerlink" title="异常数"></a>异常数</h4><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210311153529.png"><br>当资源近<code>一分钟</code>的异常数超过阈值(异常数)之后会进行服务降级,注意由于统计时间窗口是分钟级别的,若熔断时长小于<code>60s</code>,则熔断状态后仍可能再次进入熔断状态;</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">异常数</td>
+<td align="center">请求发生异常的数量</td>
+</tr>
+<tr>
+<td align="center">熔断时长</td>
+<td align="center">在这段时间内发生熔断、拒绝所有请求</td>
+</tr>
+<tr>
+<td align="center">最小请求数</td>
+<td align="center">即允许通过的最小请求数,在该数量内不发生熔断</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>执行逻辑</p>
+<ul>
+<li>熔断OPEN:请求数大于最小请求数并且异常数量大于设置的阈值时触发熔断,熔断时长自定义;</li>
+<li>探测HALFOPEN:当超过熔断时长,熔断状态转为探测状态;<br>如果接下来的一个请求未发生错误,说明应用恢复,结束熔断,状态由探测变为关闭;<br>如果接下来的一个请求继续发生错误,则继续熔断,熔断时间保持一致;</li>
+</ul>
+</blockquote>
+</blockquote>
+<h2 id="热点参数限流"><a href="#热点参数限流" class="headerlink" title="热点参数限流"></a>热点参数限流</h2><blockquote>
+<h3 id="客户端代码"><a href="#客户端代码" class="headerlink" title="客户端代码"></a>客户端代码</h3><p>代码传送门:<a target="_blank" rel="noopener" href="https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-sentinel-service8401">https://github.com/jiushiboy/springcloud/tree/master/cloudalibaba-sentinel-service8401</a></p>
+</blockquote>
+<blockquote>
+<h3 id="服务端配置热点key规则"><a href="#服务端配置热点key规则" class="headerlink" title="服务端配置热点key规则"></a>服务端配置热点key规则</h3><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210315145234.png"><br>执行效果为一秒钟之内请求超过一个并且带着第一个参数那么将执行blockHandler方法;</p>
+<div class="note warning simple"><p>Ps: @SentinelResource 注解其实就是模仿Hystrix中的@HystrixCommand</p>
+</div>
+<h3 id="高级选项-gt-参数例外项"><a href="#高级选项-gt-参数例外项" class="headerlink" title="高级选项-&gt;参数例外项"></a>高级选项-&gt;参数例外项</h3><p><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210315162235.png"><br>配置完参数例外项别忘了点击绿色的添加键,解释都在图上了,如果不懂请留言在我邮箱;</p>
+</blockquote>
+<h2 id="系统限流"><a href="#系统限流" class="headerlink" title="系统限流"></a>系统限流</h2><blockquote>
+<h3 id="系统规则的五大模式"><a href="#系统规则的五大模式" class="headerlink" title="系统规则的五大模式"></a>系统规则的五大模式</h3><ul>
+<li>Load 自适应(仅对Linux/Unix-like机器生效):系统的load1 作为启发指标,进行自适应系统保护,当系统load1超过设定启发值,且系统当前的并发线程数超过估算的系统容量时才会触发系统保护(BBR阶段);系统容量由系统的maxQps * minRt 估算得出;设置参考值一般是CPU cores * 2.5;</li>
+<li>CPU usage(1.5.0+版本):当系统CPU使用率超过阈值即触发系统保护(取值范围0.0~1.0);</li>
+<li>平均RT:当单台机器上所有的入口流量的平均RT达到阈值即触发系统保护,单位是毫秒;</li>
+<li>并发线程数:当单台机器上所有入口流量的并发线程达到阈值即触发系统保护;</li>
+<li>入口QPS:当单台机器上所有入口流量的QPS达到阈值即触发系统保护;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210315170948.png"></li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="需要解耦的问题"><a href="#需要解耦的问题" class="headerlink" title="需要解耦的问题"></a>需要解耦的问题</h3><ul>
+<li>如果我们不自己定义blockHandler那么被限流以后展示的是Sentinel默认的提示,跟我们的业务内容毫无关系;</li>
+<li>但是呢如果使用blockHandler去执行兜底方法的话又会和业务代码耦合,打个比方Service层只需要关注业务相关代码并不需要将访问数据库的代码放在Service层;</li>
+<li>以上问题还不是最恐怖的,最可怕的是每个方法如果都需要一个blockHandler那么这种代码量会超级膨胀;</li>
+<li>所以假想一下为什么不能出现一个全局的处理方式,例如Hystrix中的通过@FeignClient(value=”指定服务名称”,fallback=实现类.class),当使用这种方式则可以保证了不会造成代码的高耦合;相当于用实现类来充当兜底方法;</li>
+</ul>
+</blockquote>
+<h2 id="规则持久化"><a href="#规则持久化" class="headerlink" title="规则持久化"></a>规则持久化</h2><blockquote>
+<p>只要我们关闭了Sentinel,重启的时候一看,我配置的规则居然一个都无了,这个时候肯定需要持久化了;<br>Ps:根据官方提供的方案,那就是保存到Nacos中;</p>
+<ul>
+<li>首先在pom中导入Maven cloudalibaba-sentinel-service8401</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba.csp&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;sentinel-datasource-nacos&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>配置yml文件 其实就是配置sentinel 的datasource</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8401</span><br><span class="line"></span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: cloudalibaba-sentinel-service</span><br><span class="line">  cloud:</span><br><span class="line">    nacos:</span><br><span class="line">      discovery:</span><br><span class="line">        server-addr: localhost:8848</span><br><span class="line">    sentinel:</span><br><span class="line">      transport:</span><br><span class="line">        dashboard: localhost:8080</span><br><span class="line">        port: 8719  #默认8719，假如被占用了会自动从8719开始依次+1扫描。直至找到未被占用的端口</span><br><span class="line">      datasource:</span><br><span class="line">        ds1:</span><br><span class="line">          nacos:</span><br><span class="line">            server-addr: localhost:8848</span><br><span class="line">            dataId: cloudalibaba-sentinel-service</span><br><span class="line">            groupId: DEFAULT_GROUP</span><br><span class="line">            data-type: json</span><br><span class="line">            rule-type: flow</span><br><span class="line"></span><br><span class="line">management:</span><br><span class="line">  endpoints:</span><br><span class="line">    web:</span><br><span class="line">      exposure:</span><br><span class="line">        include: &#39;*&#39;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>然后编写Nacos<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210316150656.png"></li>
+<li>因为sentinel是懒加载所以先访问几次请求,随后就能在流控规则中直接看到你在nacos的配置内容中所配置的流控规则;<br><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/20210316150914.png"></li>
+</ul>
+</blockquote>
+<h2 id="Seata"><a href="#Seata" class="headerlink" title="Seata"></a>Seata</h2><blockquote>
+<p>Seata 是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。</p>
+</blockquote>
+<h3 id="Seata术语"><a href="#Seata术语" class="headerlink" title="Seata术语"></a>Seata术语</h3><blockquote>
+<p>TC (Transaction Coordinator) - 事务协调者</p>
+<ul>
+<li>维护全局和分支事务的状态，驱动全局事务提交或回滚。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>TM (Transaction Manager) - 事务管理器</p>
+<ul>
+<li>定义全局事务的范围：开始全局事务、提交或回滚全局事务。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>RM (Resource Manager) - 资源管理器</p>
+<ul>
+<li>管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>其余的先参考: <a target="_blank" rel="noopener" href="https://blog.csdn.net/jixieguang/article/details/110621561">https://blog.csdn.net/jixieguang/article/details/110621561</a><br>感觉现在的seata还是个半成品</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">九世</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://jiushiboy.github.io/post/20004.html">http://jiushiboy.github.io/post/20004.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://jiushiboy.github.io" target="_blank">九世</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringCloudAlibaba/">SpringCloudAlibaba</a><a class="post-meta__tags" href="/tags/SpringCloud/">SpringCloud</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/u=3360971790,3534736865&amp;fm=26&amp;gp=0.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/alipay.png" target="_blank"><img class="post-qr-code-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/50458.html"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">分布式的解决方案</div></div></a></div><div class="next-post pull-right"><a href="/post/20688.html"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">暗网如何进入呢?</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/31969.html" title="SpringCloud"><img class="cover" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-19</div><div class="title">SpringCloud</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/tx%20(2).jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">九世</div><div class="author-info__description">道听途说故等风数十载</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/jiushiboy" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1450495810@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">九世的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nacos-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C"><span class="toc-number">1.</span> <span class="toc-text">Nacos 服务注册</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nacos%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">1.1.</span> <span class="toc-text">Nacos服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nacos%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">1.2.</span> <span class="toc-text">Nacos客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83Config"><span class="toc-number">2.</span> <span class="toc-text">Nacos配置中心Config</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81%E4%BC%A0%E9%80%81%E9%97%A8"><span class="toc-number">2.1.</span> <span class="toc-text">客户端代码传送门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEConfig%E5%88%86%E7%BB%84"><span class="toc-number">2.2.</span> <span class="toc-text">配置Config分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Namespace%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">2.3.</span> <span class="toc-text">Namespace命名空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nacos%E9%9B%86%E7%BE%A4%E4%B8%8E%E6%8C%81%E4%B9%85%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Nacos集群与持久化配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sentinel%E7%86%94%E6%96%AD%E4%B8%8E%E9%99%90%E6%B5%81"><span class="toc-number">4.</span> <span class="toc-text">Sentinel熔断与限流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sentinel%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">Sentinel服务端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sentinel%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.2.</span> <span class="toc-text">Sentinel客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sentinel-1-8-0%E6%B5%81%E6%8E%A7"><span class="toc-number">4.3.</span> <span class="toc-text">Sentinel 1.8.0流控</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E8%AF%B4%E6%98%8E"><span class="toc-number">4.3.1.</span> <span class="toc-text">解释说明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sentinel-1-8-0%E9%99%8D%E7%BA%A7"><span class="toc-number">5.</span> <span class="toc-text">Sentinel 1.8.0降级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%86%94%E6%96%AD%E7%8A%B6%E6%80%81"><span class="toc-number">5.1.</span> <span class="toc-text">熔断状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E7%86%94%E6%96%AD%E7%AD%96%E7%95%A5"><span class="toc-number">5.2.</span> <span class="toc-text">三种熔断策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%85%A2%E8%B0%83%E7%94%A8%E6%AF%94%E5%88%97"><span class="toc-number">5.2.1.</span> <span class="toc-text">慢调用比列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%AF%94%E4%BE%8B"><span class="toc-number">5.2.2.</span> <span class="toc-text">异常比例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%95%B0"><span class="toc-number">5.2.3.</span> <span class="toc-text">异常数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E5%8F%82%E6%95%B0%E9%99%90%E6%B5%81"><span class="toc-number">6.</span> <span class="toc-text">热点参数限流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="toc-number">6.1.</span> <span class="toc-text">客户端代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE%E7%83%AD%E7%82%B9key%E8%A7%84%E5%88%99"><span class="toc-number">6.2.</span> <span class="toc-text">服务端配置热点key规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E9%80%89%E9%A1%B9-gt-%E5%8F%82%E6%95%B0%E4%BE%8B%E5%A4%96%E9%A1%B9"><span class="toc-number">6.3.</span> <span class="toc-text">高级选项-&gt;参数例外项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E9%99%90%E6%B5%81"><span class="toc-number">7.</span> <span class="toc-text">系统限流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%A7%84%E5%88%99%E7%9A%84%E4%BA%94%E5%A4%A7%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.1.</span> <span class="toc-text">系统规则的五大模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E8%A7%A3%E8%80%A6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">7.2.</span> <span class="toc-text">需要解耦的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">规则持久化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seata"><span class="toc-number">9.</span> <span class="toc-text">Seata</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Seata%E6%9C%AF%E8%AF%AD"><span class="toc-number">9.1.</span> <span class="toc-text">Seata术语</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/bcab918b.html" title="JDK8新特性"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JDK8新特性"/></a><div class="content"><a class="title" href="/post/bcab918b.html" title="JDK8新特性">JDK8新特性</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/7579c9d4.html" title="关于登录问题"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于登录问题"/></a><div class="content"><a class="title" href="/post/7579c9d4.html" title="关于登录问题">关于登录问题</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/dd5269ff.html" title="阿里EasyExcel"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/image1/img/3042755308.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="阿里EasyExcel"/></a><div class="content"><a class="title" href="/post/dd5269ff.html" title="阿里EasyExcel">阿里EasyExcel</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/d0edc1ed.html" title="Linux常用命令"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux常用命令"/></a><div class="content"><a class="title" href="/post/d0edc1ed.html" title="Linux常用命令">Linux常用命令</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/2ee0dda4.html" title="MySQL之PXC集群"><img src="https://cdn.jsdelivr.net/gh/jiushiboy/CDN@1.0//index.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL之PXC集群"/></a><div class="content"><a class="title" href="/post/2ee0dda4.html" title="MySQL之PXC集群">MySQL之PXC集群</a><time datetime="2022-03-28T05:54:03.932Z" title="发表于 2022-03-28 13:54:03">2022-03-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 九世</div><div class="footer_custom_text">Hi, welcome to jiushiboy <a target="_blank" rel="noopener" href="https://jiushiboy.top/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '8YFlOqnbmYOyqAkjg8GgyLC0-gzGzoHsz',
+      appKey: 'YMPaB34JxpV8V7q1ltOCEX9U',
+      placeholder: '昵称输入qq账号的话会自动获取你的头像和邮箱噢~~',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: 'https://8yfloqnb.lc-cn-n1-shared.com',
+      emojiCDN: '//i0.hdslb.com/bfs/emote/',
+      emojiMaps: {"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://8yfloqnb.lc-cn-n1-shared.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": '8YFlOqnbmYOyqAkjg8GgyLC0-gzGzoHsz',
+        "X-LC-Key": 'YMPaB34JxpV8V7q1ltOCEX9U',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script  src="/js/jiushi.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
